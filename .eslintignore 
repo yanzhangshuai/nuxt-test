@@ -1,0 +1,6 @@
+dist
+node_modules
+.nuxt
+.output
+.vscode
+nuxt.config.ts
