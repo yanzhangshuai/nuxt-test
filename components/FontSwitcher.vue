@@ -1,32 +1,22 @@
 <script setup lang="ts">
+const current = useLocalStorage('font', 'system')
+
 const fonts = [
-  { name: '系统字体', value: 'system' },
-  { name: '印刷体', value: 'serif' },
-  { name: '等宽字体', value: 'mono' },
-  { name: '段宁硬笔行书', value: 'duanNingYingBiXingShu2' },
+  { label: '系统字体',      value: 'system' },
+  { label: '印刷体',        value: 'serif' },
+  { label: '等宽字体',      value: 'mono' },
+  { label: '无衬线体',      value: 'sans' },
+  { label: '段宁硬笔行书',   value: 'duanNingYingBiXingShu2' },
 ]
 
-const current = ref('system')
-
-function onChange(font: string) {
-  if (unref(current) === font) {
-    return
-  }
-
-  current.value = font
-}
-watch(current, (newVal, oldVal) => {
-  document.documentElement.classList.remove(`font-${oldVal}`)
-  document.documentElement.classList.add(`font-${newVal}`)
+onBeforeMount(() => {
+  watch(current, (newVal, oldVal) => {
+    document.documentElement.classList.remove(`font-${oldVal || 'system'}`)
+    document.documentElement.classList.add(`font-${newVal}`)
+  }, { immediate: true })
 })
 </script>
 
 <template>
-  <div class="font-switcher">
-    <select v-model="current" class="px-3 py-2 border rounded w-full">
-      <option v-for="font in fonts" :key="font.value" :value="font.value">
-        {{ font.name }}
-      </option>
-    </select>
-  </div>
+  <ASelect id="font-switcher" v-model:value="current" :options="fonts" size="large" class="min-w-35" />
 </template>

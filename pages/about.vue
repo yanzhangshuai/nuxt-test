@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useHead({
-  meta: [
+  title: '关于我们',
+  meta : [
     { name: 'description', content: '了解更多关于我们的信息' },
     { name: 'keywords', content: 'Nuxt, Vue, 关于我们' },
   ],
 })
 // 这里可以添加页面逻辑
 definePageMeta({
-  title     : '关于我们',
   middleware: 'log',
   meta      : [
     { name: 'description', content: '了解更多关于我们的信息' },

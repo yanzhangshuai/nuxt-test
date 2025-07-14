@@ -1,7 +1,12 @@
 <script lang="ts" setup>
+useHead({
+  title: '首页',
+  meta : [
+    { name: 'description', content: '这是一个基于Nuxt 3构建的现代化网站，提供丰富的功能和优质的内容体验' },
+    { name: 'keywords', content: 'Nuxt, Vue, 网站, 现代化, 响应式设计' },
+  ],
+})
 const runtimeConfig = useRuntimeConfig()
-
-console.log(runtimeConfig.apiSecret)
 </script>
 
 <template>

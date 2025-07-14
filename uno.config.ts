@@ -17,17 +17,18 @@ export default defineConfig({
   ],
 
   theme: {
-    fontFamily: {
-      system                : 'system-ui, -apple-system, sans-serif',
-      serif                 : 'Georgia, serif',
-      mono                  : 'Menlo, Monaco, monospace',
-      duanNingYingBiXingShu2: ['DuanNingYingBiXingShu-2', 'sans-serif'],
-    },
+    // fontFamily: {
+    //   system                : 'system-ui, -apple-system, sans-serif',
+    //   serif                 : 'Georgia, serif',
+    //   mono                  : 'Menlo, Monaco, monospace',
+    //   duanNingYingBiXingShu2: ['DuanNingYingBiXingShu-2', 'sans-serif'],
+    // },
     colors: {
     },
     screens: {},
   },
   rules: [
-    ['font-duanNingYingBiXingShu2', { 'font-family': 'DuanNingYingBiXingShu-2, sans-serif' }],
+
   ],
+
 })

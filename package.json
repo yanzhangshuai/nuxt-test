@@ -11,11 +11,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@ant-design-vue/nuxt": "^1.4.6",
     "@nuxtjs/fontaine": "^0.5.0",
     "@unocss/nuxt": "^66.2.3",
     "@unocss/preset-wind4": "^66.2.3",
     "@vueuse/core": "^13.4.0",
     "@vueuse/nuxt": "^13.4.0",
+    "ant-design-vue": "^4.2.6",
     "less": "^4.3.0",
     "nuxt": "^3.17.5",
     "unocss": "^66.2.3",
