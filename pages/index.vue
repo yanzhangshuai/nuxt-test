@@ -6,7 +6,14 @@ useHead({
     { name: 'keywords', content: 'Nuxt, Vue, 网站, 现代化, 响应式设计' },
   ],
 })
-const runtimeConfig = useRuntimeConfig()
+
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  console.log(userStore.user)
+})
+
 </script>
 
 <template>

@@ -1,89 +1,120 @@
-
 .wh-full {
-  --uno-apply: w-full h-full
+  width: 100%;
+  height: 100%;
 }
 
 .wh-screen {
-  --uno-apply: w-screen h-screen
+  width: 100vw;
+  height: 100vh;
 }
 
 .flex-center {
-  --uno-apply: flex justify-center items-center
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-x-center {
-  --uno-apply: flex justify-center
+  display: flex;
+  justify-content: center;
 }
 
 .flex-y-center {
-  --uno-apply: flex items-center
+  display: flex;
+  align-items: center;
 }
 
 .flex-between {
-  --uno-apply: flex justify-between
+  display: flex;
+  justify-content: space-between;
 }
 
 .flex-center-between {
-  --uno-apply: flex-y-center justify-between
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.flex-n-col {
-  --uno-apply: flex flex-col
+.flex-col {
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-col-center {
-  --uno-apply: flex-n-col flex-center justify-center
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-col-y-center {
-  --uno-apply: flex-n-col flex-y-center
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .flex-col-x-center {
-  --uno-apply: flex-n-col flex-x-center
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 
 .i-flex-col {
-  --uno-apply: inline-flex flex-col
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .i-flex-center {
-  --uno-apply: inline-flex justify-center items-center
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .i-flex-y-center {
-  --uno-apply: inline-flex items-center
+  display: inline-flex;
+  align-items: center;
 }
 
 .flex-1-hidden {
-  --uno-apply: flex-1 hidden
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
 .absolute-lt {
-  --uno-apply: absolute left-0 top-0
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .absolute-lb {
-  --uno-apply: absolute left-0 bottom-0
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .absolute-rt {
-  --uno-apply: absolute right-0 top-0
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .absolute-rb {
-  --uno-apply: absolute right-0 bottom-0
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .absolute-center {
-  --uno-apply: absolute-lt flex-center wh-full
-}
-
-.nowrap-hidden {
-  --uno-apply: whitespace-nowrap overflow-hidden
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .ellipsis-text {
-  --uno-apply: nowrap-hidden overflow-ellipsis
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

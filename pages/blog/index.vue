@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import type { BlogPost } from '~/server/api/blog/data'
+import { useBlogService } from '~/services/blog';
 
-const { data: posts } = await useFetch<BlogPost[]>('/api/blog/list')
+
+
+const blogService = useBlogService()
+const { data: posts } = await blogService.list()
 </script>
 
 <template>

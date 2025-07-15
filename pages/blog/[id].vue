@@ -1,16 +1,17 @@
 <script lang="ts" setup>
-import type { BlogPost } from '~/server/api/blog/data'
+import { useBlogService } from '~/services/blog'
+
 
 const { params } = useRoute()
 const id = Number(params.id)
 
-const { data: post, pending, error } = await useFetch<BlogPost>(`/api/blog/${id}`, {
-  lazy: true,
-})
+const blogService = useBlogService()
+const { data: post, pending, error } = await blogService.get(id)
 
 useHead({
-  title: post.value?.title || '博客详情',
+  title: unref(post)?.title || '博客详情',
 })
+
 </script>
 
 <template>

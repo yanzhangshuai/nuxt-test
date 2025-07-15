@@ -1,14 +1,36 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import process from 'node:process'
 
 export default defineNuxtConfig({
+
   compatibilityDate: '2025-05-15',
   modules          : [
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@ant-design-vue/nuxt',
+    'nuxt-lodash',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: [
+          // 自动引入 `defineStore()`
+          'defineStore',
+          // 自动引入 `defineStore()` 并重命名为 `definePiniaStore()`
+          ['defineStore', 'definePiniaStore'],
+        ],
+      },
+    ],
   ],
   devtools: { enabled: true },
+
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+    public   : {
+      // 客户端可访问的配置
+      apiBase: '/api',
+    },
+  },
 
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -25,6 +47,16 @@ export default defineNuxtConfig({
     },
   },
 
+  // imports: {
+  //   dirs: [
+  //     'services/**/index.{ts,js,mjs,mts}',
+  //     'stores/**/index.{ts,js,mjs,mts}',
+  //   ],
+  // },
+
+  devServer: {
+    port: 4010,
+  },
   nitro: {
 
   },

@@ -1,15 +1,32 @@
 <script setup lang="ts">
+import { EAuthModalType } from './AuthModal.vue'
+import { useUserStore } from '~/stores/user'
+
 const appConfig = useAppConfig()
 const isCollapsed = ref(false)
+const userStore = useUserStore()
 
-const toggleCollapse = () => {
-  isCollapsed.value = !isCollapsed.value
+const authModal = reactive<{
+  visible: boolean
+  type   : EAuthModalType // 1=登录, 2=注册
+}>({
+  visible: false,
+  type   : EAuthModalType.LOGIN, // 默认登录
+})
+
+const openAuthModal = (type: EAuthModalType) => {
+  authModal.type = type
+  authModal.visible = true
 }
+
 </script>
 
 <template>
+  <AuthModal v-model:visible="authModal.visible" :type="authModal.type"/>
+
   <aside class="app-sidebar" :class="{ collapsed: isCollapsed }">
     <div class="sidebar-content">
+
       <NuxtLink class="logo flex-center" to="/">
         <img src="/images/logo.png" alt="Logo" width="25" height="25">
         <span v-if="!isCollapsed" class="ml-2">{{ appConfig.title }}</span>
@@ -38,23 +55,41 @@ const toggleCollapse = () => {
         </ul>
       </nav>
 
-      <div class="bottom mt-auto gap-4 flex-n-col">
-        <button class="btn login-btn">
-          <span v-if="!isCollapsed">登录</span>
-          <span v-else>🔑</span>
-        </button>
+      <div class="bottom mt-auto gap-4 flex-col">
+        <template v-if="userStore.user">
 
-        <button class="btn register-btn">
-          <span v-if="!isCollapsed">注册</span>
-          <span v-else>✍️</span>
-        </button>
+          <div class="flex-col gap-2">
+            <div class="flex-center-between">
+              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full" />
+              <span v-if="!isCollapsed">{{ userStore.user.name }}</span>
+            </div>
+
+            <AButton type="default" @click="userStore.logout">
+            <span v-if="!isCollapsed">退出</span>
+            <span v-else>🚪</span>
+          </AButton>
+           
+          </div>
+        </template>
+
+        <template v-else>
+          <AButton type="default" size="large" @click="openAuthModal(EAuthModalType.LOGIN)">
+            <span v-if="!isCollapsed">登录</span>
+            <span v-else>🔑</span>
+          </AButton>
+
+          <AButton type="primary" size="large" @click="openAuthModal(EAuthModalType.REGISTER)">
+            <span v-if="!isCollapsed">注册</span>
+            <span v-else>✍️</span>
+          </AButton>
+        </template>
 
         <FontSwitcher />
       </div>
 
       <div class="h-4" />
 
-      <button class="collapse-btn inline-flex ml-auto" @click="toggleCollapse">
+      <button class="collapse-btn inline-flex ml-auto" @click="isCollapsed = !isCollapsed">
         {{ isCollapsed ? '→' : '←' }}
       </button>
     </div>

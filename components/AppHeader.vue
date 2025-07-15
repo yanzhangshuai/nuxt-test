@@ -1,6 +1,23 @@
 <script setup lang="ts">
+import { EAuthModalType } from './AuthModal.vue'
+import { useUserStore } from '~/stores/user'
+
 const appConfig = useAppConfig()
-// 这里可以添加组件逻辑
+const userStore = useUserStore()
+
+const authModal = reactive<{
+  visible: boolean
+  type   : EAuthModalType // 1=登录, 2=注册
+}>({
+  visible: false,
+  type   : EAuthModalType.LOGIN, // 1=登录, 2=注册
+})
+
+const openAuthModal = (type: EAuthModalType) => {
+  authModal.type = type
+  authModal.visible = true
+}
+
 </script>
 
 <template>
@@ -23,14 +40,25 @@ const appConfig = useAppConfig()
 
       <div class="right flex-center gap-4">
         <div class="flex gap-4 user-actions">
-          <button class="login-btn">登录</button>
-          <button class="register-btn">注册</button>
+          <template v-if="userStore.user">
+            <div class="flex items-center gap-2">
+              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full">
+              <span>{{ userStore.user.name }}</span>
+              <AButton @click="userStore.logout">退出</AButton>
+            </div>
+          </template>
+          <template v-else>
+            <AButton size="large" type="default" class="w-25 border-primary" @click="openAuthModal(EAuthModalType.LOGIN)">登录</AButton>
+            <AButton size="large" type="primary" class="w-25" @click="openAuthModal(EAuthModalType.REGISTER)">注册</AButton>
+          </template>
         </div>
 
         <FontSwitcher />
       </div>
     </div>
   </header>
+
+  <AuthModal v-model:visible="authModal.visible" :type="authModal.type" />
 </template>
 
 <style scoped lang="less">
@@ -75,7 +103,6 @@ const appConfig = useAppConfig()
 }
 
 .user-actions button {
-  padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
 }

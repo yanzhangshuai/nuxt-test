@@ -1,10 +1,6 @@
-import { blogPosts } from './data'
-
 export default defineEventHandler((event) => {
   const id = Number(event.context.params?.id)
-  const post = blogPosts.find(p => p.id === id)
-
-  console.log('parseCookies', parseCookies(event))
+  const post = getBlogPostById(id)
 
   if (!post) {
     throw createError({
