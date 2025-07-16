@@ -1,8 +1,6 @@
 import { set } from '@vueuse/core'
 import { defineStore } from 'pinia'
 
-import type { IUser } from '~/server/utils/account/types'
-
 import { useAccountService } from '~/services/account'
 
 export const useUserStore = defineStore('user', () => {
@@ -20,11 +18,13 @@ export const useUserStore = defineStore('user', () => {
         throw new Error(unref(error)!.message || '获取用户信息失败')
       }
       set(user, unref(data))
-    } catch (err: any) {
+    }
+    catch (err: any) {
       if (import.meta.client) {
         message.error(err.message)
       }
-    } finally {
+    }
+    finally {
       if (import.meta.client) {
         message.destroy()
       }
@@ -38,9 +38,10 @@ export const useUserStore = defineStore('user', () => {
       if (unref(error)) {
         throw new Error(unref(error)!.message || '登录失败')
       }
-      
+
       set(user, unref(data))
-    } catch (err: any) {
+    }
+    catch (err: any) {
       if (import.meta.client) {
         message.error(err.message)
       }
@@ -51,7 +52,8 @@ export const useUserStore = defineStore('user', () => {
     try {
       await accountService.logout()
       set(user, null)
-    } catch (err: any) {
+    }
+    catch (err: any) {
       if (import.meta.client) {
         message.error(err.message)
       }

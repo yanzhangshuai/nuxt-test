@@ -1,43 +1,40 @@
-import { describe, it, expect, vi } from 'vitest'
-import AppSidebar from './AppSidebar.vue'
-import { useUserStore } from '~/stores/user'
-import { EAuthModalType } from './AuthModal.vue'
-import { mountSuspended } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
+
+import AppSidebar from './AppSidebar.vue'
+import { EAuthModalType } from './AuthModal.vue'
 
 interface AppSidebarInstance {
   authModal: {
     visible: boolean
-    type: EAuthModalType
+    type   : EAuthModalType
   }
   isCollapsed: boolean
 }
-
 
 vi.mock('~/services/account', () => ({
   useAccountService: vi.fn(() => ({
     login: vi.fn().mockResolvedValue({
       data: {
-        id: 1,
-        email: 'test@example.com',
-        name: 'Test User',
-        avatar: '/avatar.png'
+        id    : 1,
+        email : 'test@example.com',
+        name  : 'Test User',
+        avatar: '/avatar.png',
       },
-      error: null
+      error: null,
     }),
-    logout: vi.fn().mockResolvedValue({})
-  }))
+    logout: vi.fn().mockResolvedValue({}),
+  })),
 }))
 
-describe('AppSidebar', () => {
-
+describe('appSidebar', () => {
   describe('common', async () => {
     const wrapper = await mountSuspended(AppSidebar, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },
     })
-
 
     it('renders correctly', () => {
       expect(wrapper.find('.app-sidebar').exists()).toBe(true)
@@ -58,7 +55,6 @@ describe('AppSidebar', () => {
     it('contains FontSwitcher component when not collapsed', () => {
       expect(wrapper.findComponent({ name: 'FontSwitcher' }).exists()).toBe(true)
     })
-
   })
 
   describe('when collapsed', async () => {
@@ -109,7 +105,6 @@ describe('AppSidebar', () => {
   })
 
   describe('when user is logged in', async () => {
-
     const wrapper = await mountSuspended(AppSidebar, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
@@ -129,5 +124,4 @@ describe('AppSidebar', () => {
       expect(wrapper.find('[data-test-id="sidebar-logout-btn"]').text()).toBe('退出')
     })
   })
-
 })

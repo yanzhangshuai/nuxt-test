@@ -1,7 +1,3 @@
-import { COOKIE_NAME } from '~/server/utils/const'
-import { generateToken } from '~/server/utils/account/jwt'
-import { findUserByEmail } from '~/server/utils/account/service'
-
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody(event)
 

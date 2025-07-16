@@ -1,17 +1,18 @@
-import { set } from '@vueuse/core';
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
+import { describe, expect, it, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
+
 import { useLayout } from '~/hooks/layout'
+
 import LayoutSwitcher from './LayoutSwitcher.vue'
 
 // Mock useLayout hook
 vi.mock('~/hooks/layout', () => ({
   useLayout: vi.fn(() => ({
-    current: computed<'default' | 'sidebar'>(() => 'default'),
+    current     : computed<'default' | 'sidebar'>(() => 'default'),
     toggleLayout: vi.fn(),
-    setLayout: vi.fn<(type: 'default' | 'sidebar') => void>()
-  }))
+    setLayout   : vi.fn<(type: 'default' | 'sidebar') => void>(),
+  })),
 }))
 
 // Mock @vueuse/core
@@ -19,21 +20,21 @@ vi.mock('@vueuse/core', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@vueuse/core')>()
   return {
     ...actual,
-    createGlobalState: vi.fn((fn) => fn)
+    createGlobalState: vi.fn(fn => fn),
   }
 })
 
-describe('LayoutSwitcher', async () => {
+describe('layoutSwitcher', async () => {
   // let wrapper: ReturnType<typeof mount>
   const currentLayout = ref<'default' | 'sidebar'>('default')
   const mockUseLayout = {
-    current: computed(() => currentLayout.value),
+    current     : computed(() => currentLayout.value),
     toggleLayout: vi.fn(() => {
       currentLayout.value = currentLayout.value === 'default' ? 'sidebar' : 'default'
     }),
     setLayout: vi.fn((type: 'default' | 'sidebar') => {
       currentLayout.value = type
-    })
+    }),
   }
 
   vi.mocked(useLayout).mockReturnValue(mockUseLayout)
@@ -53,7 +54,7 @@ describe('LayoutSwitcher', async () => {
     mockUseLayout.setLayout('default')
     await wrapper.find('button').trigger('click')
     expect(mockUseLayout.current.value).toBe('sidebar')
-    
+
     await wrapper.find('button').trigger('click')
     expect(mockUseLayout.current.value).toBe('default')
   })
@@ -61,7 +62,7 @@ describe('LayoutSwitcher', async () => {
   it('sets layout when setLayout called', async () => {
     mockUseLayout.setLayout('sidebar')
     expect(mockUseLayout.current.value).toBe('sidebar')
-    
+
     mockUseLayout.setLayout('default')
     expect(mockUseLayout.current.value).toBe('default')
   })

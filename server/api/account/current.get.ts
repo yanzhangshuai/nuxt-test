@@ -1,6 +1,3 @@
-import { verifyToken } from '~/server/utils/account/jwt'
-import { findUserById } from '~/server/utils/account/service'
-
 export default defineEventHandler(async (event) => {
   // 从cookie获取token
   const token = getCookie(event, COOKIE_NAME)

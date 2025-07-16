@@ -1,15 +1,15 @@
-import { mount } from '@vue/test-utils';
-import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+import { createTestingPinia } from '@pinia/testing'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
+
 import AppHeader from './AppHeader.vue'
 import { EAuthModalType } from './AuthModal.vue'
-import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { createTestingPinia } from '@pinia/testing'
-import { useUserStore } from '~/stores/user'
 
 interface AppHeaderInstance {
   authModal: {
     visible: boolean
-    type: EAuthModalType
+    type   : EAuthModalType
   }
 }
 
@@ -17,21 +17,19 @@ vi.mock('~/services/account', () => ({
   useAccountService: vi.fn(() => ({
     login: vi.fn().mockResolvedValue({
       data: {
-        id: 1,
-        email: 'test@example.com',
-        name: 'Test User',
-        avatar: '/avatar.png'
+        id    : 1,
+        email : 'test@example.com',
+        name  : 'Test User',
+        avatar: '/avatar.png',
       },
-      error: null
+      error: null,
     }),
-    logout: vi.fn().mockResolvedValue({})
-  }))
+    logout: vi.fn().mockResolvedValue({}),
+  })),
 }))
 
-describe('AppHeader ', () => {
-
+describe('appHeader ', () => {
   describe('common', async () => {
-
     const wrapper = await mountSuspended(AppHeader, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
@@ -95,9 +93,7 @@ describe('AppHeader ', () => {
     })
   })
 
-
   describe('when user is logged in', async () => {
-
     const wrapper = await mountSuspended(AppHeader, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
@@ -122,6 +118,4 @@ describe('AppHeader ', () => {
       expect(userStore.logout).toHaveBeenCalled()
     })
   })
-
 })
-

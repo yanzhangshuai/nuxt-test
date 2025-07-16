@@ -1,18 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { ref } from 'vue'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import FontSwitcher from './FontSwitcher.vue'
 
 interface FontSwitcherInstance {
-  fonts: Array<{ label: string; value: string }>
+  fonts  : Array<{ label: string, value: string }>
   current: string
 }
 
-describe('FontSwitcher', () => {
+describe('fontSwitcher', () => {
   // Mock document.classList
   const classListMock = {
-    add: vi.fn(),
-    remove: vi.fn()
+    add   : vi.fn(),
+    remove: vi.fn(),
   }
 
   // Mock @vueuse/core with partial mocking
@@ -20,7 +21,7 @@ describe('FontSwitcher', () => {
     const actual = await importOriginal<typeof import('@vueuse/core')>()
     return {
       ...actual,
-      useLocalStorage: vi.fn(() => ref('system'))
+      useLocalStorage: vi.fn(() => ref('system')),
     }
   })
 
@@ -28,8 +29,8 @@ describe('FontSwitcher', () => {
     // Reset mocks before each test
     vi.clearAllMocks()
     Object.defineProperty(document.documentElement, 'classList', {
-      value: classListMock,
-      writable: true
+      value   : classListMock,
+      writable: true,
     })
   })
 
@@ -54,7 +55,7 @@ describe('FontSwitcher', () => {
       { label: '印刷体', value: 'serif' },
       { label: '等宽字体', value: 'mono' },
       { label: '无衬线体', value: 'sans' },
-      { label: '段宁硬笔行书', value: 'duanNingYingBiXingShu2' }
+      { label: '段宁硬笔行书', value: 'duanNingYingBiXingShu2' },
     ])
   })
 
@@ -67,11 +68,11 @@ describe('FontSwitcher', () => {
 
   //   console.log('==========', vm.current)
   //   await wrapper.vm.$nextTick()
-    
+
   //   vm.current = 'serif'
   //   console.log('==========::::', vm.current)
   //   await wrapper.vm.$nextTick()
-    
+
   //   expect(classListMock.remove).toHaveBeenCalledWith('font-system')
   //   expect(classListMock.add).toHaveBeenCalledWith('font-serif')
   //   expect(vm.current).toBe('serif')
@@ -81,10 +82,10 @@ describe('FontSwitcher', () => {
   //   const useLocalStorage = (await import('@vueuse/core')).useLocalStorage
   //   const wrapper = await mountSuspended(FontSwitcher)
   //   const vm = wrapper.vm as unknown as FontSwitcherInstance
-    
+
   //   vm.current = 'mono'
   //   await wrapper.vm.$nextTick()
-    
+
   //   expect(useLocalStorage).toHaveBeenCalledWith('font', 'system')
   //   expect(vm.current).toBe('mono')
   // })

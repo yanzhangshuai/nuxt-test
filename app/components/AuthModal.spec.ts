@@ -1,60 +1,56 @@
-import { describe, it, expect, vi } from 'vitest'
-import AuthModal from './AuthModal.vue'
-import { EAuthModalType } from './AuthModal.vue'
-import { mountSuspended } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
-import { useAccountService } from '~/services/account'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
 
+import AuthModal, { EAuthModalType } from './AuthModal.vue'
 
 vi.mock('~/services/account', () => ({
   useAccountService: vi.fn(() => ({
     login: vi.fn().mockResolvedValue({
       data: ref({
-        id: 1,
-        email: 'test@example.com',
-        name: 'Test User',
-        avatar: '/avatar.png'
-      }),
-      error: null
-    }),
-
-    register: vi.fn().mockResolvedValue({
-      data: ref({
-        id: 1,
-        email: 'test@example.com',
-        name: '',
-        avatar: ''
+        id    : 1,
+        email : 'test@example.com',
+        name  : 'Test User',
+        avatar: '/avatar.png',
       }),
       error: null,
     }),
 
-    logout: vi.fn().mockResolvedValue({})
-  }))
+    register: vi.fn().mockResolvedValue({
+      data: ref({
+        id    : 1,
+        email : 'test@example.com',
+        name  : '',
+        avatar: '',
+      }),
+      error: null,
+    }),
+
+    logout: vi.fn().mockResolvedValue({}),
+  })),
 }))
 
-
-describe('AuthModal', () => {
+describe('authModal', () => {
   describe('common', async () => {
     const wrapper = await mountSuspended(AuthModal, {
       props: {
         type: EAuthModalType.LOGIN,
-        open: true
+        open: true,
       },
       global: {
         plugins: [
           createTestingPinia({
             stubActions: false,
-          })
+          }),
         ],
         stubs: {
           AModal: {
-            template: '<div><slot /></div>',
-            inheritAttrs: false
-          }
-        }
-      }
+            template    : '<div><slot /></div>',
+            inheritAttrs: false,
+          },
+        },
+      },
     })
-
 
     it('renders correctly in login mode', async () => {
       expect(wrapper.find('form').exists()).toBe(true)
@@ -85,28 +81,27 @@ describe('AuthModal', () => {
 
     //   // expect((wrapper.vm as any).open).toBe(false)
     // })
-
   })
 
   describe('form validation', async () => {
     const wrapper = await mountSuspended(AuthModal, {
       props: {
         type: EAuthModalType.LOGIN,
-        open: true
+        open: true,
       },
       global: {
         plugins: [
           createTestingPinia({
             stubActions: false,
-          })
+          }),
         ],
         stubs: {
           AModal: {
-            template: '<div><slot /></div>',
-            inheritAttrs: false
-          }
-        }
-      }
+            template    : '<div><slot /></div>',
+            inheritAttrs: false,
+          },
+        },
+      },
     })
 
     it('validates login form', async () => {
@@ -125,7 +120,6 @@ describe('AuthModal', () => {
       // console.log('Validation errors:', errorMessages.map(e => e.text()))
       // //TODO: 不知道为啥name字段验证通过
       // expect(errorMessages.length).toBe(2) // 应该验证3个字段：姓名、邮箱、密码
-
 
       // Test valid inputs
       await emailInput.setValue('valid@example.com')
@@ -159,7 +153,7 @@ describe('AuthModal', () => {
       expect(submitBtn.attributes('disabled')).toBeDefined()
       // let errorMessages = wrapper.findAll('.ant-form-item-explain-error')
       // console.log('Validation errors:', errorMessages.map(e => e.text()))
-      //TODO: 不知道为啥name字段验证通过
+      // TODO: 不知道为啥name字段验证通过
       // expect(errorMessages.length).toBe(2) // 应该验证3个字段：姓名、邮箱、密码
 
       // Test valid inputs
@@ -177,7 +171,6 @@ describe('AuthModal', () => {
       //   expect(errorMessages[0].text()).toContain('密码')
       // }
     })
-
   })
 
   // describe('form submission', async () => {
@@ -203,7 +196,6 @@ describe('AuthModal', () => {
 
   //   vi.clearAllMocks()
 
-
   //   const accountService = useAccountService()
   //   const userStore = useUserStore()
 
@@ -211,7 +203,6 @@ describe('AuthModal', () => {
   //     await wrapper.find('[id="form_item_email"]').setValue('test@example.com')
   //     await wrapper.find('[id="form_item_password"]').setValue('password123')
   //     await wrapper.find('form').trigger('submit.prevent')
-
 
   //     await wrapper.vm.$nextTick()
   //     await new Promise(resolve => setTimeout(resolve, 100))
@@ -254,7 +245,5 @@ describe('AuthModal', () => {
 
   //   // })
 
-
   // })
-
 })

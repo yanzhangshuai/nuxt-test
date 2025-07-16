@@ -1,8 +1,3 @@
-import { COOKIE_NAME } from '~/server/utils/const'
-import { createUser } from '~/server/utils/account/service'
-import { generateToken } from '~/server/utils/account/jwt'
-import { validateRegister } from '~/server/utils/account/validator'
-
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 

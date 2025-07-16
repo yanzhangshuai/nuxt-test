@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useLayout } from './hooks/layout'
-import { useUserStore } from './stores/user'
+import { useLayout } from '~/hooks/layout'
+import { useUserStore } from '~/stores/user'
 
 useHead({
   titleTemplate: 'Nuxt 现代化网站 - %s',
@@ -9,10 +9,6 @@ useHead({
 const { current: currentLayout } = useLayout()
 
 await useUserStore().getUser()
-
-// const event = useRequestEvent()
-
-// console.log('event========', event)
 
 </script>
 

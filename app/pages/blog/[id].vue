@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useBlogService } from '~/services/blog'
 
-
 const { params } = useRoute()
 const id = Number(params.id)
 
