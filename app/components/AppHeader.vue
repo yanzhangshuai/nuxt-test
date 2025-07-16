@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { EAuthModalType } from './AuthModal.vue'
 import { useUserStore } from '~/stores/user'
 
 const appConfig = useAppConfig()
@@ -7,17 +6,16 @@ const userStore = useUserStore()
 
 const authModal = reactive<{
   visible: boolean
-  type   : EAuthModalType // 1=登录, 2=注册
+  type   : 1 | 2 // 1=登录, 2=注册
 }>({
   visible: false,
-  type   : EAuthModalType.LOGIN, // 1=登录, 2=注册
+  type   : 1, // 1=登录, 2=注册
 })
 
-const openAuthModal = (type: EAuthModalType) => {
+const openAuthModal = (type: 1 | 2) => {
   authModal.type    = type
   authModal.visible = true
 }
-
 </script>
 
 <template>
@@ -42,14 +40,14 @@ const openAuthModal = (type: EAuthModalType) => {
         <div class="flex gap-4 user-actions">
           <template v-if="userStore.user">
             <div class="flex items-center gap-2">
-              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full" />
+              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full">
               <span>{{ userStore.user.name }}</span>
-              <AButton @click="userStore.logout" data-test-id="logout-btn">退出</AButton>
+              <AButton data-test-id="logout-btn" @click="userStore.logout">退出</AButton>
             </div>
           </template>
           <template v-else>
-            <AButton size="large" type="default" class="w-25 border-primary" @click="openAuthModal(EAuthModalType.LOGIN)" data-test-id="login-btn">登录</AButton>
-            <AButton size="large" type="primary" class="w-25" @click="openAuthModal(EAuthModalType.REGISTER)" data-test-id="register-btn">注册</AButton>
+            <AButton size="large" type="default" class="w-25 border-primary" data-test-id="login-btn" @click="openAuthModal(1)">登录</AButton>
+            <AButton size="large" type="primary" class="w-25" data-test-id="register-btn" @click="openAuthModal(2)">注册</AButton>
           </template>
         </div>
 

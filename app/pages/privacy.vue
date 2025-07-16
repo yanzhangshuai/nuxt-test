@@ -1,12 +1,22 @@
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth',
+})
+// You can add any necessary logic here
+</script>
+
 <template>
   <div class="privacy-page">
     <h1>Privacy Policy</h1>
     <div class="content">
       <p>Last updated: July 16, 2025</p>
-      
+
       <section>
         <h2>Information We Collect</h2>
-        <p>We collect information you provide directly to us, such as when you create an account, subscribe to our newsletter, or contact us.</p>
+        <p>
+          We collect information you provide directly to us, such as when you create an account, subscribe to our
+          newsletter, or contact us.
+        </p>
       </section>
 
       <section>
@@ -26,15 +36,14 @@
 
       <section>
         <h2>Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+        <p>
+          We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new
+          policy on this page.
+        </p>
       </section>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-// You can add any necessary logic here
-</script>
 
 <style scoped>
 .privacy-page {

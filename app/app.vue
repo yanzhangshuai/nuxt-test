@@ -7,9 +7,7 @@ useHead({
 })
 
 const { current: currentLayout } = useLayout()
-
-await useUserStore().getUser()
-
+await useUserStore().fetchUser()
 </script>
 
 <template>

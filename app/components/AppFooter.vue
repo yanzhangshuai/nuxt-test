@@ -7,9 +7,9 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-links">
-          <a href="/about">关于我们</a>
-          <a href="/contact">联系我们</a>
-          <a href="/privacy">隐私政策</a>
+          <NuxtLink to="/about">关于我们</NuxtLink>
+          <NuxtLink to="/contact">联系我们</NuxtLink>
+          <NuxtLink to="/privacy">隐私政策</NuxtLink>
         </div>
         <div class="copyright">
           © 2025 公司名称. 保留所有权利

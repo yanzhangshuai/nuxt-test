@@ -8,8 +8,7 @@ useHead({
 })
 // 这里可以添加页面逻辑
 definePageMeta({
-  middleware: 'log',
-  meta      : [
+  meta: [
     { name: 'description', content: '了解更多关于我们的信息' },
     { name: 'keywords', content: 'Nuxt, Vue, 关于我们' },
   ],

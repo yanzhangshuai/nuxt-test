@@ -21,13 +21,7 @@ export default antfu(
             style : { lang: ['less', 'css'] },
           },
         ],
-        'vue/max-attributes-per-line': ['error', {
-          singleline: 3,
-          multiline : {
-            max           : 1,
-            allowFirstLine: false,
-          },
-        }],
+
         'vue/attributes-order': ['error', {
           order: [
             'DEFINITION',
@@ -44,6 +38,14 @@ export default antfu(
           ],
           alphabetical: false,
         }],
+
+        // 'vue/max-attributes-per-line': ['error', {
+        //   singleline: 3,
+        //   multiline : {
+        //     max           : 1,
+        //     allowFirstLine: false,
+        //   },
+        // }],
       },
     },
     typescript: {

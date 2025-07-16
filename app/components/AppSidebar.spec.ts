@@ -3,12 +3,11 @@ import { createTestingPinia } from '@pinia/testing'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 import AppSidebar from './AppSidebar.vue'
-import { EAuthModalType } from './AuthModal.vue'
 
 interface AppSidebarInstance {
   authModal: {
     visible: boolean
-    type   : EAuthModalType
+    type   : 1 | 2
   }
   isCollapsed: boolean
 }
@@ -100,7 +99,7 @@ describe('appSidebar', () => {
       userStore.user = null
       await wrapper.find('[data-test-id="sidebar-login-btn"]').trigger('click')
       expect((wrapper.vm as unknown as AppSidebarInstance).authModal.visible).toBe(true)
-      expect((wrapper.vm as unknown as AppSidebarInstance).authModal.type).toBe(EAuthModalType.LOGIN)
+      expect((wrapper.vm as unknown as AppSidebarInstance).authModal.type).toBe(1)
     })
   })
 

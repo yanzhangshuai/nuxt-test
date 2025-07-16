@@ -8,61 +8,48 @@ export const useUserStore = defineStore('user', () => {
 
   const user = ref<IUser | null>(null)
 
-  const getUser = async () => {
-    if (import.meta.client) {
-      message.loading('正在加载用户信息...', 0)
-    }
+  const fetchUser = async () => {
     try {
       const { data, error } = await accountService.current()
       if (unref(error)) {
         throw new Error(unref(error)!.message || '获取用户信息失败')
       }
+
       set(user, unref(data))
     }
-    catch (err: any) {
-      if (import.meta.client) {
-        message.error(err.message)
-      }
-    }
-    finally {
-      if (import.meta.client) {
-        message.destroy()
-      }
+    catch (error: any) {
+      console.error('Error fetching user:', error.message)
+      set(user, null)
     }
   }
 
   const login = async (email: string, password: string) => {
-    try {
-      const { data, error } = await accountService.login({ email, password })
+    const { error } = await accountService.login({ email, password })
 
-      if (unref(error)) {
-        throw new Error(unref(error)!.message || '登录失败')
-      }
+    if (unref(error)) {
+      throw new Error(unref(error)!.data || '登录失败')
+    }
 
-      set(user, unref(data))
-    }
-    catch (err: any) {
-      if (import.meta.client) {
-        message.error(err.message)
-      }
-    }
+    fetchUser()
   }
 
   const logout = async () => {
-    try {
-      await accountService.logout()
-      set(user, null)
+    const { error } = await accountService.logout()
+    if (unref(error)) {
+      throw new Error(unref(error)!.data || '登出失败')
     }
-    catch (err: any) {
-      if (import.meta.client) {
-        message.error(err.message)
-      }
+
+    set(user, null)
+
+    // 刷新页面状态
+    if (import.meta.client) {
+      window.location.reload()
     }
   }
 
   return {
     user,
-    getUser,
+    fetchUser,
     login,
     logout,
   }

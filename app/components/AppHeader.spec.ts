@@ -4,12 +4,11 @@ import { createTestingPinia } from '@pinia/testing'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 import AppHeader from './AppHeader.vue'
-import { EAuthModalType } from './AuthModal.vue'
 
 interface AppHeaderInstance {
   authModal: {
     visible: boolean
-    type   : EAuthModalType
+    type   : 1 | 2
   }
 }
 
@@ -82,14 +81,14 @@ describe('appHeader ', () => {
       userStore.user = null
       await wrapper.find('[data-test-id="login-btn"]').trigger('click')
       expect((wrapper.vm as unknown as AppHeaderInstance).authModal.visible).toBe(true)
-      expect((wrapper.vm as unknown as AppHeaderInstance).authModal.type).toBe(EAuthModalType.LOGIN)
+      expect((wrapper.vm as unknown as AppHeaderInstance).authModal.type).toBe(1)
     })
 
     it('opens register modal when register button clicked', async () => {
       userStore.user = null
       await wrapper.find('[data-test-id="register-btn"]').trigger('click')
       expect((wrapper.vm as unknown as AppHeaderInstance).authModal.visible).toBe(true)
-      expect((wrapper.vm as unknown as AppHeaderInstance).authModal.type).toBe(EAuthModalType.REGISTER)
+      expect((wrapper.vm as unknown as AppHeaderInstance).authModal.type).toBe(2)
     })
   })
 

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
-import AuthModal, { EAuthModalType } from './AuthModal.vue'
+import AuthModal from './AuthModal.vue'
 
 vi.mock('~/services/account', () => ({
   useAccountService: vi.fn(() => ({
@@ -34,7 +34,7 @@ describe('authModal', () => {
   describe('common', async () => {
     const wrapper = await mountSuspended(AuthModal, {
       props: {
-        type: EAuthModalType.LOGIN,
+        type: 1, // 登录
         open: true,
       },
       global: {
@@ -86,7 +86,7 @@ describe('authModal', () => {
   describe('form validation', async () => {
     const wrapper = await mountSuspended(AuthModal, {
       props: {
-        type: EAuthModalType.LOGIN,
+        type: 1,
         open: true,
       },
       global: {
@@ -176,7 +176,7 @@ describe('authModal', () => {
   // describe('form submission', async () => {
   //   const wrapper = await mountSuspended(AuthModal, {
   //     props: {
-  //       type: EAuthModalType.LOGIN,
+  //       type: 1,
   //       open: true
   //     },
   //     global: {
