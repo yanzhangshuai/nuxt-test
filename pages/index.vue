@@ -8,12 +8,6 @@ useHead({
 })
 
 
-const userStore = useUserStore()
-
-onMounted(() => {
-  console.log(userStore.user)
-})
-
 </script>
 
 <template>

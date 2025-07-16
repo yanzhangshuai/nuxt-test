@@ -6,28 +6,23 @@ export const useAccountService = defineService({
   },
 
   login(data: { email: string, password: string }) {
-    return request.post('account-login', '/api/account/login', {
+    return request.post(Date.now().toString(), '/api/account/login', {
       body   : data,
       server: false,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
   },
 
   logout() {
-    return request.post('account-logout', '/api/account/logout', {
+    return request.post(Date.now().toString(), '/api/account/logout', {
         server: false,
     })
   },
 
   register(data: { name: string, email: string, password: string }) {
-    return request.post('account-register', '/api/account/register', {
-      body   : data,
+    return request.post(Date.now().toString(), '/api/account/register', {
+      body  : data,
       server: false,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      lazy  : true
     })
   }
 })

@@ -14,7 +14,7 @@ const authModal = reactive<{
 })
 
 const openAuthModal = (type: EAuthModalType) => {
-  authModal.type = type
+  authModal.type    = type
   authModal.visible = true
 }
 
@@ -32,9 +32,9 @@ const openAuthModal = (type: EAuthModalType) => {
 
       <nav class="nav-menu">
         <ul>
-          <li><NuxtLink to="/">首页</NuxtLink></li>
-          <li><NuxtLink to="/blog">博客</NuxtLink></li>
-          <li><NuxtLink to="/about">关于</NuxtLink></li>
+          <li><NuxtLink to="/" data-test-id="nav-home">首页</NuxtLink></li>
+          <li><NuxtLink to="/blog" data-test-id="nav-blog">博客</NuxtLink></li>
+          <li><NuxtLink to="/about" data-test-id="nav-about">关于</NuxtLink></li>
         </ul>
       </nav>
 
@@ -42,14 +42,14 @@ const openAuthModal = (type: EAuthModalType) => {
         <div class="flex gap-4 user-actions">
           <template v-if="userStore.user">
             <div class="flex items-center gap-2">
-              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full">
+              <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full" />
               <span>{{ userStore.user.name }}</span>
-              <AButton @click="userStore.logout">退出</AButton>
+              <AButton @click="userStore.logout" data-test-id="logout-btn">退出</AButton>
             </div>
           </template>
           <template v-else>
-            <AButton size="large" type="default" class="w-25 border-primary" @click="openAuthModal(EAuthModalType.LOGIN)">登录</AButton>
-            <AButton size="large" type="primary" class="w-25" @click="openAuthModal(EAuthModalType.REGISTER)">注册</AButton>
+            <AButton size="large" type="default" class="w-25 border-primary" @click="openAuthModal(EAuthModalType.LOGIN)" data-test-id="login-btn">登录</AButton>
+            <AButton size="large" type="primary" class="w-25" @click="openAuthModal(EAuthModalType.REGISTER)" data-test-id="register-btn">注册</AButton>
           </template>
         </div>
 
@@ -58,7 +58,7 @@ const openAuthModal = (type: EAuthModalType) => {
     </div>
   </header>
 
-  <AuthModal v-model:visible="authModal.visible" :type="authModal.type" />
+  <AuthModal v-model:open="authModal.visible" :type="authModal.type" />
 </template>
 
 <style scoped lang="less">

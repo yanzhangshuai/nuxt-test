@@ -14,7 +14,7 @@ catch (err) {
 
 const dbPath = path.join(dataDir, 'app.db')
 const db = new Database(dbPath, {
-  verbose: console.log, // Log SQL queries for debugging
+  // verbose: console.log, // Log SQL queries for debugging
 })
 
 

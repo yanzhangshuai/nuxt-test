@@ -2,9 +2,8 @@
 import process from 'node:process'
 
 export default defineNuxtConfig({
-
   compatibilityDate: '2025-05-15',
-  modules          : [
+  modules: [
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
@@ -21,12 +20,14 @@ export default defineNuxtConfig({
         ],
       },
     ],
+
+    '@nuxt/test-utils/module',
   ],
   devtools: { enabled: true },
 
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET,
-    public   : {
+    public: {
       // 客户端可访问的配置
       apiBase: '/api',
     },
@@ -35,7 +36,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     // layoutTransition: { name: 'fade', mode: 'in-out' },
-    head          : {
+    head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { charset: 'utf-8' },
@@ -57,14 +58,26 @@ export default defineNuxtConfig({
   devServer: {
     port: 4010,
   },
+  routeRules: {
+    '/': { prerender: true },
+    '/contact': {
+      redirect: { to: '/about', statusCode: 302 }
+    },
+  },
   nitro: {
-
+    hooks: {
+      "prerender:generate"(route) {
+        if (route.route?.includes("private")) {
+          route.skip = true;
+        }
+      },
+    },
   },
 
   vite: {
     css: {
       preprocessorMaxWorkers: true,
-      preprocessorOptions   : {
+      preprocessorOptions: {
         less: {
           additionalData: `@import "~/assets/less/variables.less";`,
           // additionalData: '@use "~/assets/theme/colors.less" as *;',
@@ -74,9 +87,9 @@ export default defineNuxtConfig({
     resolve: {
       alias: {
         'ant-design-vue/dist': 'ant-design-vue/dist',
-        'ant-design-vue/es'  : 'ant-design-vue/es',
-        'ant-design-vue/lib' : 'ant-design-vue/es',
-        'ant-design-vue'     : 'ant-design-vue/es',
+        'ant-design-vue/es': 'ant-design-vue/es',
+        'ant-design-vue/lib': 'ant-design-vue/es',
+        'ant-design-vue': 'ant-design-vue/es',
       },
     },
   },

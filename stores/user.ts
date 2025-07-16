@@ -11,7 +11,9 @@ export const useUserStore = defineStore('user', () => {
   const user = ref<IUser | null>(null)
 
   const getUser = async () => {
-    message.loading('正在加载用户信息...', 0)
+    if (import.meta.client) {
+      message.loading('正在加载用户信息...', 0)
+    }
     try {
       const { data, error } = await accountService.current()
       if (unref(error)) {
@@ -19,9 +21,29 @@ export const useUserStore = defineStore('user', () => {
       }
       set(user, unref(data))
     } catch (err: any) {
-      message.error(err.message)
+      if (import.meta.client) {
+        message.error(err.message)
+      }
     } finally {
-      message.destroy()
+      if (import.meta.client) {
+        message.destroy()
+      }
+    }
+  }
+
+  const login = async (email: string, password: string) => {
+    try {
+      const { data, error } = await accountService.login({ email, password })
+
+      if (unref(error)) {
+        throw new Error(unref(error)!.message || '登录失败')
+      }
+      
+      set(user, unref(data))
+    } catch (err: any) {
+      if (import.meta.client) {
+        message.error(err.message)
+      }
     }
   }
 
@@ -30,13 +52,16 @@ export const useUserStore = defineStore('user', () => {
       await accountService.logout()
       set(user, null)
     } catch (err: any) {
-      message.error(err.message)
+      if (import.meta.client) {
+        message.error(err.message)
+      }
     }
   }
 
   return {
     user,
     getUser,
+    login,
     logout,
   }
 })

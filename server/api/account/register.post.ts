@@ -33,8 +33,7 @@ export default defineEventHandler(async (event) => {
       sameSite: 'strict',
     })
 
-    return {
-    }
+    return {}
   }
   catch (err) {
     throw createError({

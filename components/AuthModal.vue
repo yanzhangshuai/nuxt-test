@@ -25,7 +25,7 @@ const props = defineProps<{
   type: EAuthModalType
 }>()
 
-const visible = defineModel<boolean>('visible', { required: true })
+const open = defineModel<boolean>('open', { required: true })
 
 const accountService = useAccountService()
 
@@ -61,7 +61,7 @@ const loginRules: Record<keyof IForm, Rule[]> = {
 
 const registerRules: Record<keyof IForm, Rule[]> = {
   name: [
-    { required: true, message: '请输入姓名', trigger: 'blur' }
+    { required: true, message: '请输入姓名', trigger: 'blur' },
   ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -96,7 +96,7 @@ watch(() => props.type, (newType) => {
   currentType.value = newType || EAuthModalType.LOGIN
 }, { immediate: true })
 
-watch([currentType, visible], () => {
+watch([currentType, open], () => {
   formRef.value?.resetFields()
    Object.entries(fieldTouched).forEach(([key]) => {
     fieldTouched[key as keyof IForm] = false
@@ -129,7 +129,7 @@ async function onSubmit() {
 
 
     await useUserStore().getUser()
-    visible.value = false // 登录成功关闭弹窗
+    open.value = false // 登录成功关闭弹窗
 
   } catch (error: any) {
     message.error(error.message)
@@ -141,7 +141,7 @@ async function onSubmit() {
 
 <template>
   <AModal
-    v-model:visible="visible"
+    v-model:open="open"
     :title="currentType === EAuthModalType.LOGIN ? '用户登录' : '用户注册'"
     :footer="null"
     :maskClosable="false"

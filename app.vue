@@ -7,7 +7,12 @@ useHead({
 })
 
 const { current: currentLayout } = useLayout()
+
 await useUserStore().getUser()
+
+// const event = useRequestEvent()
+
+// console.log('event========', event)
 
 </script>
 
