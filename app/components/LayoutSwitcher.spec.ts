@@ -2,8 +2,6 @@ import { computed, ref } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
-import { useLayout } from '~/hooks/layout'
-
 import LayoutSwitcher from './LayoutSwitcher.vue'
 
 // Mock useLayout hook

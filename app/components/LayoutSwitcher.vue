@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useLayout } from '~/hooks/layout'
-
 const { current: currentLayout, toggleLayout } = useLayout()
 </script>
 

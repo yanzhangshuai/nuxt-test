@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@ant-design-vue/nuxt',
-    'nuxt-lodash',
+    // 'nuxt-lodash',
     [
       '@pinia/nuxt',
       {
@@ -23,6 +23,10 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
   devtools: { enabled: true },
+
+  imports: {
+    // scan: false,
+  },
 
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET,

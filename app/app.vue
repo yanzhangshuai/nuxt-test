@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useLayout } from '~/hooks/layout'
 import { useUserStore } from '~/stores/user'
 
 useHead({

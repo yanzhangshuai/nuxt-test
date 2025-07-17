@@ -88,6 +88,7 @@ const openAuthModal = (type: 1 | 2) => {
   display: flex;
   gap: 1.5rem;
   list-style: none;
+  margin: 0;
 }
 
 .nav-menu a {
