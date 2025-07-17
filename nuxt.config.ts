@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       },
     ],
     '@nuxt/test-utils/module',
+    '@nuxt/eslint',
   ],
   devtools: { enabled: true },
 
@@ -66,6 +67,11 @@ export default defineNuxtConfig({
     '/contact': {
       redirect: { to: '/about', statusCode: 302 },
     },
+    // 博客文章页面按需生成，后台重新验证，在 CDN 上缓存 1 小时（3600 秒）
+    '/blog'   : { isr: 3600 },
+    // 博客文章页面按需生成，直到下次部署，缓存在 CDN 上
+    '/blog/**': { isr: true },
+    '/api/**' : { cors: true },
   },
   nitro: {
     hooks: {
