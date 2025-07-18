@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     ],
     '@nuxt/test-utils/module',
     '@nuxt/eslint',
+    'nuxt-auth-utils',
+    '@sidebase/nuxt-auth',
   ],
   devtools: { enabled: true },
 
@@ -30,7 +32,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    jwtSecret: process.env.JWT_SECRET,
+    jwtSecret: '',
     public   : {
       // 客户端可访问的配置
       apiBase: '/api',
@@ -116,6 +118,13 @@ export default defineNuxtConfig({
 
   antd: {
     extractStyle: true,
+  },
+
+  auth: {
+    provider: {
+      type: 'authjs',
+    },
+    sessionDataType: { id: 'string' }, // 自定义 session 类型
   },
 
 })

@@ -105,7 +105,14 @@ async function onSubmit() {
     loading.value = true
 
     if (unref(currentType) === 1) {
-      await userStore.login(form.email, form.password)
+      // await userStore.login(form.email, form.password)
+      const { error } = await accountService.login({
+        email   : form.email,
+        password: form.password,
+      })
+
+      if (unref(error))
+        throw unref(error)!.data
     }
     else {
       const { error } = await accountService.register({
@@ -116,9 +123,9 @@ async function onSubmit() {
 
       if (unref(error))
         throw unref(error)!.data
-
-      await useUserStore().fetchUser()
+      // await useUserStore().fetchUser()
     }
+    await useUserSession().fetch()
 
     open.value = false // 登录成功关闭弹窗
   }

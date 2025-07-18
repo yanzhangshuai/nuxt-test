@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { createGlobalState } from '@vueuse/core'
 
 export const useLayout = createGlobalState(() => {
-  const layout = ref<'default' | 'sidebar'>('default')
+  const layout = useLocalStorage<'default' | 'sidebar'>('layout', 'default')
 
   const current = computed(() => {
     return layout.value === 'sidebar' ? 'sidebar' : 'default'

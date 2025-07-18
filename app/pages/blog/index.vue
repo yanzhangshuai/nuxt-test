@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { useBlogService } from '~/services/blog';
-
-
+import { useBlogService } from '~/services/blog'
 
 const blogService = useBlogService()
 const { data: posts } = await blogService.list()

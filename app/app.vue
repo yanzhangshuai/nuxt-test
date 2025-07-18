@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/user'
-
 useHead({
   titleTemplate: 'Nuxt 现代化网站 - %s',
 })
 
 const { current: currentLayout } = useLayout()
-await useUserStore().fetchUser()
+// await useUserStore().fetchUser()
 </script>
 
 <template>

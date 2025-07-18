@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'auth',
+  middleware: 'auth-v2',
 })
 // You can add any necessary logic here
 </script>

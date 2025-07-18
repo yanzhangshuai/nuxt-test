@@ -6,8 +6,6 @@ useHead({
     { name: 'keywords', content: 'Nuxt, Vue, 网站, 现代化, 响应式设计' },
   ],
 })
-
-
 </script>
 
 <template>
@@ -35,6 +33,8 @@ useHead({
       <NuxtLink class="cta-button secondary" to="/about">关于我们</NuxtLink>
     </div>
   </div>
+
+  <ServerDemo />
 </template>
 
 <style scoped lang="less">

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/user'
-
 const appConfig = useAppConfig()
 const isCollapsed = ref(false)
-const userStore = useUserStore()
+// const userStore = useUserStore()
 
+const { clear } = useUserSession()
 const authModal = reactive<{
   visible: boolean
   type   : 1 | 2 // 1=登录, 2=注册
@@ -16,6 +15,13 @@ const authModal = reactive<{
 const openAuthModal = (type: 1 | 2) => {
   authModal.type = type
   authModal.visible = true
+}
+
+const onLogout = async () => {
+  // await accountService.logout()
+  clear()
+  // fetch() // 刷新用户状态
+  message.success('已退出登录')
 }
 </script>
 
@@ -53,7 +59,7 @@ const openAuthModal = (type: 1 | 2) => {
       </nav>
 
       <div class="bottom mt-auto gap-4 flex-col">
-        <template v-if="userStore.user">
+        <!-- <template v-if="userStore.user">
           <div class="flex-col gap-2">
             <div class="flex-center-between">
               <img :src="userStore.user.avatar" class="w-8 h-8 rounded-full">
@@ -62,7 +68,7 @@ const openAuthModal = (type: 1 | 2) => {
           </div>
         </template>
 
-        <template v-else>
+<template v-else>
           <AButton type="default" size="large" class="p-0" data-test-id="sidebar-login-btn" @click="openAuthModal(1)">
             <span v-if="!isCollapsed">登录</span>
             <span v-else>🔑</span>
@@ -72,7 +78,28 @@ const openAuthModal = (type: 1 | 2) => {
             <span v-if="!isCollapsed">注册</span>
             <span v-else>✍️</span>
           </AButton>
-        </template>
+        </template> -->
+
+        <AuthState v-slot="{ loggedIn, user }">
+          <div v-if="loggedIn" class="flex-col gap-2">
+            <div class="flex-center-between">
+              <img :src="user!.avatar" class="w-8 h-8 rounded-full">
+              <span v-if="!isCollapsed">{{ user!.name }}</span>
+            </div>
+          </div>
+
+          <ASpace v-else direction="vertical">
+            <AButton type="primary" size="large" block ghost data-test-id="sidebar-login-btn" @click="openAuthModal(1)">
+              <span v-if="!isCollapsed">登录</span>
+              <span v-else>🔑</span>
+            </AButton>
+
+            <AButton type="primary" size="large" block data-test-id="sidebar-register-btn" @click="openAuthModal(2)">
+              <span v-if="!isCollapsed">注册</span>
+              <span v-else>✍️</span>
+            </AButton>
+          </ASpace>
+        </AuthState>
 
         <FontSwitcher v-if="!isCollapsed" />
       </div>
@@ -80,9 +107,20 @@ const openAuthModal = (type: 1 | 2) => {
       <div class="h-4" />
 
       <div class="flex-center-between">
-        <AButton v-if="!isCollapsed && userStore.user" type="default" data-test-id="sidebar-logout-btn" @click="userStore.logout">
+        <AuthState v-slot="{ loggedIn }">
+          <AButton
+            v-if="!isCollapsed && loggedIn" type="default" data-test-id="sidebar-logout-btn"
+            @click="onLogout"
+          >
+            <span>退出</span>
+          </AButton>
+        </AuthState>
+        <!-- <AButton
+          v-if="!isCollapsed && userStore.user" type="default" data-test-id="sidebar-logout-btn"
+          @click="userStore.logout"
+        >
           <span>退出</span>
-        </AButton>
+        </AButton> -->
         <AButton type="text" class="ml-auto" data-test-id="sidebar-toggle-btn" @click="isCollapsed = !isCollapsed">
           {{ isCollapsed ? '→' : '←' }}
         </AButton>

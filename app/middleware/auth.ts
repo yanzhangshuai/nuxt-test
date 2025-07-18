@@ -1,5 +1,6 @@
 export default defineNuxtRouteMiddleware(async () => {
   // 客户端直接使用store状态
+
   try {
     const userStore = useUserStore()
     if (!userStore.user) {
