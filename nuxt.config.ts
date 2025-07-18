@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     '@nuxt/eslint',
     'nuxt-auth-utils',
-    '@sidebase/nuxt-auth',
+    // '@sidebase/nuxt-auth',
   ],
   devtools: { enabled: true },
 
@@ -120,11 +120,11 @@ export default defineNuxtConfig({
     extractStyle: true,
   },
 
-  auth: {
-    provider: {
-      type: 'authjs',
-    },
-    sessionDataType: { id: 'string' }, // 自定义 session 类型
-  },
+  // auth: {
+  //   provider: {
+  //     type: 'authjs',
+  //   },
+  //   sessionDataType: { id: 'string' }, // 自定义 session 类型
+  // },
 
 })
